@@ -22,7 +22,7 @@ public interface DictCode {
 		public static final String FORMATE_TIME = "HH:mm:ss";
 		
 		/** 默认数据库配置路径 */
-		public static final String DATABASE_PROPERTIES = "src/main/resources/props/database.properties";
+		public static final String DATABASE_PROPERTIES = "src/main/resources/props/auot-config.properties";
 	}
 	
 	/**
@@ -62,6 +62,22 @@ public interface DictCode {
 		
 		/** 生成类型 */
 		public static final String GENERAL_CLASS = "general.class";
+
+		/** 生成类型 */
+		public static final String GENERAL_AUTHOR = "general.author";
+	}
+	
+	/** 
+	 * 生成类型 
+	 */
+	interface GeneralClassType {
+		public static final String TYPE_DTO = "dto";
+
+		public static final String TYPE_ENTITY = "entity";
+		
+		public static final String TYPE_ENUM = "enum";
+		
+		public static final String TYPE_Assembler = "assembler";
 	}
 	
 	

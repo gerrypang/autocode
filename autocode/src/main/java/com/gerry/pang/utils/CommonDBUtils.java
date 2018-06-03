@@ -142,7 +142,7 @@ public class CommonDBUtils {
 	 * @param c
 	 * @return
 	 */
-	public static <T> String queryFieldByID(Map<String,String> connMap,String sql, String param, Class<T> c){
+	public static <T> String queryFieldByID(Map<String,String> connMap, String sql, String param, Class<T> c){
 		Connection connection = null;
 		String result = null;
 		try {
@@ -215,7 +215,7 @@ public class CommonDBUtils {
 	 * @param param
 	 * @return
 	 */
-	public static Map<String,Object> queryFields(Map<String,String> connMap,String sql, Object... param){
+	public static Map<String,Object> queryFields(Map<String,String> connMap, String sql, Object... param){
 		Connection connection = null;
 		Map<String,Object> result = null;
 		try {
@@ -245,7 +245,7 @@ public class CommonDBUtils {
 	 * @param param
 	 * @return
 	 */
-	public static int update(Map<String,String> connMap,String sql,Object... param){
+	public static int update(Map<String,String> connMap, String sql, Object... param){
 		Connection connection = null;
 		int result = 0;
 		try {
@@ -292,7 +292,33 @@ public class CommonDBUtils {
 		return result;
 	}
 	
-	
+	/**
+	 *
+	 *
+	 * @param connMap
+	 * @param sql
+	 * @param param
+	 */
+	public static List<Object[]> queryList(String sql, Object... param){
+		Connection connection = null;
+		List<Object[]> result = null;
+		try {
+			connection = getConnection();
+	    	QueryRunner  query = new QueryRunner();
+	    	logger.info("The execute SQL is {}, and the param is {}", sql, param);
+	    	result = query.query(connection, sql, new ArrayListHandler(), param);
+	    	logger.info("result is {}" , result);
+		} catch (Exception e) {
+			logger.error("查询异常！", e);
+		} finally {
+			if (null != connection) {
+				//关闭数据库连接
+				DbUtils.closeQuietly(connection);
+			}
+		}
+		return result;
+	}
+
 	public static void main(String[] args) {
 		getConnection();
 		System.out.println();

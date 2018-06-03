@@ -11,7 +11,7 @@ public class EnumModel {
 	private String codeName;
 	/** 枚举值 */
 	private String codeValue;
-	/** 中午解释 */
+	/** 中文解释 */
 	private String codeComment;
 
 	public String getCodeName() {

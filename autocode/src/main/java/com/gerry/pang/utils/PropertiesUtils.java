@@ -62,5 +62,4 @@ public class PropertiesUtils {
         }  
         return properties;  
     }
-
 }
