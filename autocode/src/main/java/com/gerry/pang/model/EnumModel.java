@@ -7,10 +7,13 @@ package com.gerry.pang.model;
  * @version v 1.0.0 2018-06-01
  */
 public class EnumModel {
+	
 	/** 枚举英文名 */
 	private String codeName;
+	
 	/** 枚举值 */
 	private String codeValue;
+	
 	/** 中文解释 */
 	private String codeComment;
 

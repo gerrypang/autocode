@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF8
+encoding//src/main/java/com/gerry/pang/template/AssemblerClass.ftl=UTF8
+encoding//src/main/java/com/gerry/pang/template/DTOClass.ftl=UTF8
+encoding//src/main/java/com/gerry/pang/template/EntityClass.ftl=UTF8
+encoding//src/main/java/com/gerry/pang/template/EnumClass.ftl=UTF8
+encoding//src/main/java/com/gerry/pang/template/ImplementClass.ftl=UTF8
+encoding//src/main/java/com/gerry/pang/template/InterfaceClass.ftl=UTF8
+encoding//src/main/resources=UTF-8
+encoding//src/test/java=UTF8
+encoding//src/test/resources=UTF-8
+encoding/<project>=UTF-8

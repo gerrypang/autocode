@@ -1,4 +1,4 @@
-package ${classPath};
+package ${packageName}.assembler;
 
 ${importStr}
 

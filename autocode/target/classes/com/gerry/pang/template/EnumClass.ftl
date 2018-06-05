@@ -1,4 +1,4 @@
-package ${classPath};
+package ${packageName}.enum;
 
 import java.util.ArrayList;
 import java.util.List;

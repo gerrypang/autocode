@@ -9,13 +9,29 @@ import java.util.List;
  * @version v1.0.0 2018-06-01
  */
 public class DataSourceModel {
+	
+	/** 数据库类型 */
 	private String dataType;
+	
+	/** 数据库驱动类 */
 	private String driverClass;
+	
+	/** 数据库链接url */
 	private String serverUrl;
+	
+	/** 数据库链接端口 */
 	private int port;
+	
+	/** 数据库名 */
 	private String databaseName;
+
+	/** 用户名 */
 	private String username;
+
+	/** 密码 */
 	private String password;
+	
+	/** 数据表模型list */
 	private List<TableModel> tables;
 
 	public String getDataType() {

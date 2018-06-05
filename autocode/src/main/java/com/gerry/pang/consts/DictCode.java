@@ -9,6 +9,9 @@ public interface DictCode {
 	 * 常用代码
 	 */
 	interface CommonCode {
+		public static final String YES = "yes";
+		public static final String NO = "no";
+		
 		/** 默认编码方式 */
 		public static final String DEFAULT_CHARTSET = "UTF-8";
 		
@@ -22,7 +25,13 @@ public interface DictCode {
 		public static final String FORMATE_TIME = "HH:mm:ss";
 		
 		/** 默认数据库配置路径 */
-		public static final String DATABASE_PROPERTIES = "src/main/resources/props/auot-config.properties";
+		public static final String CONFIG_PROPERTIES_PATH = "src/main/resources/props/autoCodeconfig.properties";
+		
+		/** 模板配置路径 */
+		public static final String TEMPLATE_PATH = "src/main/java/com/gerry/pang/template";
+		
+		/** 生成文件后缀名 */
+		public static final String SUFFIX = ".java";
 	}
 	
 	/**
@@ -65,6 +74,12 @@ public interface DictCode {
 
 		/** 生成类型 */
 		public static final String GENERAL_AUTHOR = "general.author";
+		
+		/** 生成基础包路径 */
+		public static final String GENERAL_PACKAGE = "general.package";
+		
+		/** 生成路径 */
+		public static final String GENERAL_PATH = "general.path";
 	}
 	
 	/** 
@@ -115,12 +130,16 @@ public interface DictCode {
 	 */
 	interface DatabaseURL {
 		/** MYSQL url */
-		public static final String MYSQL_URL = "jdbc:mysql://ip:port/dbname?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8";
+		public static final String MYSQL_URL = "?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8";
 		
 		/** ORACLE url */
 		public static final String ORACLE_URL = "jdbc:oracle:thin:@ip:port:dbname";
 		
 		/** DB2 url */
 		public static final String DB2_URL = "jdbc:db2://ip:port/dbname";
+	}
+	
+	interface MySQLKeyGeneralStrategy {
+		public static final String AUTO = "auto_increment";
 	}
 }

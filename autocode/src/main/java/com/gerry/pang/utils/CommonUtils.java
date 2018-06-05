@@ -1,10 +1,17 @@
 package com.gerry.pang.utils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.gerry.pang.consts.DictCode.CommonCode;
 import com.gerry.pang.consts.DictCode.DatabaseDriverClass;
 import com.gerry.pang.consts.DictCode.DatabaseType;
 import com.gerry.pang.consts.DictCode.DatabaseURL;
+import com.gerry.pang.consts.DictCode.GeneralClassType;
 import com.gerry.pang.model.DataSourceModel;
 
 public class CommonUtils {
@@ -64,15 +71,94 @@ public class CommonUtils {
 	 */
 	public static String getJarFileUrl(){
 		String path = System.getProperty("java.class.path");
-		int firstIndex = path.lastIndexOf(System.getProperty("path.separator")) + 1;
+		int firstIndex = path.lastIndexOf(System.getProperty("user.dir")) + 1;
 		int lastIndex = path.lastIndexOf(File.separator) + 1;
 		path = path.substring(firstIndex, lastIndex);
 		return path;
 	}
 	
-//	public static void main(String[] args) {
-//		String aa = getJarFileUrl();
-//		System.out.println();
-//	}
+	/**
+	 * 获取当前工作路径
+	 * 
+	 * @return 
+	 * @author pangguowei
+	 * @version 2018-06-01-1:57:44
+	 */
+	public static String getCruuentWorkUrl(){
+		String path = System.getProperty("user.dir");
+		return path;
+	}
+	
+	public static String jointNewPath(String basePath, String type, String fileName) {
+		StringBuilder filePath = new StringBuilder(100);
+		filePath.append(basePath).append(File.separatorChar).append(type).append(File.separatorChar).append(fileName).append(CommonCode.SUFFIX);
+		return filePath.toString();
+	}
+	
+	/**
+	 * 创建文件夹
+	 * 
+	 * @return 
+	 * @author pangguowei
+	 * @version 2018-06-01-1:57:44
+	 */
+	public static boolean creatDirs(String aParentDir, String aSubDir) {
+		File aFile = new File(aParentDir);
+		if (aFile.exists()) {
+			File aSubFile = new File(aParentDir + File.separator + aSubDir);
+			if (!aSubFile.exists()) {
+				return aSubFile.mkdirs();
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * 获取数据类型
+	 * 
+	 * @return 
+	 * @author pangguowei
+	 * @version 2018-06-01-1:57:44
+	 */
+	public static String getDataType(String args) {
+		String temp = "";
+		if (StringUtils.isNotBlank(args)) {
+			if (StringUtils.contains(args, "(")) {
+				return StringUtils.substringBefore(args, "(");
+			}
+		}
+		return temp;
+	}
+
+	/**
+	 * 获取数据长度
+	 * 
+	 * @return 
+	 * @author pangguowei
+	 * @version 2018-06-01-1:57:44
+	 */
+	public static List<String> getDataLength(String args) {
+		String temp = "";
+		List<String> dataLength = new ArrayList<String>();
+		if (StringUtils.isNotBlank(args)) {
+			if (StringUtils.contains(args, "(")) {
+				temp = StringUtils.substringBetween(args, "(", ")");
+				if (StringUtils.contains(temp, ",")) {
+					dataLength = Arrays.asList(temp.split(","));
+				} else {
+					dataLength.add(temp);
+				}
+			}
+		}
+		return dataLength;
+	}
+	
+	
+	public static void main(String[] args) {
+		System.out.println(getJarFileUrl());
+	}
 	
 }
