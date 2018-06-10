@@ -3,7 +3,7 @@ package com.gerry.pang.model;
 /**
  * 枚举类-模型
  * 
- * @author pangguowei
+ * @author gerry_pang
  * @version v 1.0.0 2018-06-01
  */
 public class EnumModel {

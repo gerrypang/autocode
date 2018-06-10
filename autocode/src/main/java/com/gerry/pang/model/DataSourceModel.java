@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 数据源-模型
  * 
- * @author pangguowei
+ * @author gerry_pang
  * @version v1.0.0 2018-06-01
  */
 public class DataSourceModel {

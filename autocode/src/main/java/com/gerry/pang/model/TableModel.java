@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * 数据表-模型
  * 
- * @author pangguowei
+ * @author gerry_pang
  * @version v1.0.0 2018-06-01
  */
 public class TableModel{
@@ -24,6 +24,12 @@ public class TableModel{
 	private String comment;
 	
 	private Set<String> importClass = new HashSet<String>();
+	
+	@Override
+	public String toString() {
+		return "TableModel [tableName=" + tableName + ", javaName=" + javaName
+				+ ", comment=" + comment + "]";
+	}
 
 	public String getTableName() {
 		return tableName;

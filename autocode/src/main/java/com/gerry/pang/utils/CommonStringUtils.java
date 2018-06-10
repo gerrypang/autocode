@@ -85,7 +85,13 @@ public class CommonStringUtils {
 		char[] allChar = spell.toCharArray();
 		for (int i = 0; i < allChar.length; i++) {
 			if (firstUpper && i==0) {
-				allChar[i] -= 32;
+				if (allChar[i] >= 'a' && allChar[i] <= 'z') {
+					allChar[i] -= 32;
+				}
+			} else {
+				if (allChar[i] >= 'A' && allChar[i] <= 'Z') {
+					allChar[i] += 32;
+				}
 			}
 			// 删除下划线，并将后面字母改为大写
 			if (allChar[i] == '_') {
@@ -95,16 +101,16 @@ public class CommonStringUtils {
 					split.append(allChar[i]);
 					continue;
 				}
-			}
+			} 
 			split.append(allChar[i]);
 		}
 		return split.toString();
 	}
 	
 	public static void main(String[] args) throws Exception {
-		String a = formatClassName("class_bame");
-		String v = formatVariableName("class_bame");
-		String p = formatPackageName("class.Mame");
+		String a = formatVariableName("CLASS_BAME");
+		String v = formatVariableName("CLASS_BAME");
+		String p = formatVariableName("CLASSMAME");
 		System.out.println(a);
 		System.out.println(v);
 		System.out.println(p);

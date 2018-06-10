@@ -8,7 +8,7 @@ import com.gerry.pang.consts.MySQLDataTypeMapping;
 /**
  * 数据表字段-模型
  * 
- * @author pangguowei
+ * @author gerry_pang
  * @version v1.0.0 2018-06-01
  */
 public class ColumnModel {
@@ -65,6 +65,48 @@ public class ColumnModel {
 			importClass = StringUtils.isNotBlank(javaFullNameType) ? javaFullNameType : "";
 			this.setJavaType(StringUtils.substringAfterLast(javaFullNameType, "."));
 		}
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((columnName == null) ? 0 : columnName.hashCode());
+		result = prime * result + ((javaType == null) ? 0 : javaType.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ColumnModel other = (ColumnModel) obj;
+		if (columnName == null) {
+			if (other.columnName != null)
+				return false;
+		} else if (!columnName.equals(other.columnName))
+			return false;
+		if (javaType == null) {
+			if (other.javaType != null)
+				return false;
+		} else if (!javaType.equals(other.javaType))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ColumnModel [columnName=" + columnName + ", javaName="
+				+ javaName + ", columnType=" + columnType + ", javaType="
+				+ javaType + ", columnTypeLength=" + columnTypeLength
+				+ ", colunSize=" + colunSize + ", digits=" + digits
+				+ ", extra=" + extra + ", comment=" + comment + ", nullable="
+				+ nullable + ", cloumnKey=" + cloumnKey + ", chartset="
+				+ chartset + ", importClass=" + importClass + "]";
 	}
 	
 	public String getColumnName() {

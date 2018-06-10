@@ -3,7 +3,11 @@ package com.gerry.pang.utils;
 import java.io.File;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.gerry.pang.consts.DictCode.CommonCode;
+import com.gerry.pang.handler.SetUpHandler;
 
 import freemarker.cache.NullCacheStorage;
 import freemarker.template.Configuration;
@@ -12,10 +16,12 @@ import freemarker.template.TemplateExceptionHandler;
 /**
  * freemarker生成配置
  * 
- * @author pangguowei
+ * @author gerry_pang
  * @version 2018-06-05 1:51:20
  */
 public class CommonFreemarkerUtils {
+	
+	private static final Logger logger = LoggerFactory.getLogger(SetUpHandler.class);
 	
 	private CommonFreemarkerUtils() {
 		
@@ -35,7 +41,7 @@ public class CommonFreemarkerUtils {
 		try {
 			CONFIGURATION.setDirectoryForTemplateLoading(new File(ftlPath));
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("加载模板路径出现异常，{}", e.toString());
 		}
 		return CONFIGURATION;
 	}

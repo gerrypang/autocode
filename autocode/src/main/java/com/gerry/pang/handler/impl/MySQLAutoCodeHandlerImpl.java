@@ -25,9 +25,9 @@ import com.gerry.pang.utils.CommonUtils;
  * @author gerry_pang
  * @version v1.0.0 2018-06-04
  */
-public class MySQLAutoCodeHanlerImpl implements AutoCodeHandler {
+public class MySQLAutoCodeHandlerImpl implements AutoCodeHandler {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MySQLAutoCodeHanlerImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(MySQLAutoCodeHandlerImpl.class);
 
 	/**
 	 * 获取库中所有表模型
@@ -38,9 +38,15 @@ public class MySQLAutoCodeHanlerImpl implements AutoCodeHandler {
 	@Override
 	public List<TableModel> getTableList(DataSourceModel dataSource) {
 		List<TableModel> tableList = new ArrayList<TableModel>();
-		List<TableModel> returnList = new ArrayList<TableModel>();
 		StringBuilder sql = new StringBuilder(50);
-		sql.append("SHOW TABLE STATUS FROM `").append(dataSource.getDatabaseName()).append("`");
+		sql.append("SHOW TABLE STATUS FROM `").append(dataSource.getDatabaseName()).append("` WHERE Comment!='VIEW' ");
+		if (CollectionUtils.isNotEmpty(dataSource.getTables())) {
+			sql.append("AND name IN(");
+			for (TableModel tableModel : dataSource.getTables()) {
+				sql.append("'").append(tableModel.getTableName()).append("',");
+			}
+			sql.append("'')");
+		}
 		List<Object[]> queryResult = CommonDBUtils.queryList(dataSource, sql.toString());
 		tableList = queryResult.stream().filter(n -> n != null && n.length == 18).map(n -> {
 			TableModel tableOne = new TableModel();
@@ -54,19 +60,7 @@ public class MySQLAutoCodeHanlerImpl implements AutoCodeHandler {
 			tableOne.setComment(n[17].toString());
 			return tableOne;
 		}).collect(Collectors.toList());
-		if (CollectionUtils.isNotEmpty(dataSource.getTables())) {
-			returnList = tableList.stream().filter(n -> {
-				for (TableModel tableModel : dataSource.getTables()) {
-					if(n.getTableName().equals(tableModel.getTableName())){
-						return true;
-					}
-				}
-				return false;
-			}).collect(Collectors.toList());
-		} else {
-			returnList = tableList;
-		}
-		return returnList;
+		return tableList;
 	}
 
 	/**
@@ -89,6 +83,7 @@ public class MySQLAutoCodeHanlerImpl implements AutoCodeHandler {
 			} catch (Exception e) {
 				logger.error(e.getMessage());
 			}
+			columnOne.setColumnTypeLength(n[1].toString());
 			columnOne.setColumnType(CommonUtils.getDataType(n[1].toString()));
 			columnOne.setJavaType(MySQLDataTypeMapping.typeMapping.get(columnOne.getColumnType()));
 			List<String> lengthList = CommonUtils.getDataLength(n[1].toString());
@@ -98,11 +93,12 @@ public class MySQLAutoCodeHanlerImpl implements AutoCodeHandler {
 					columnOne.setDigits(Integer.valueOf(lengthList.get(1)));
 				}
 			}
-			columnOne.setColumnTypeLength(n[1].toString());
 			columnOne.convertDatabaseToJavaType(DatabaseType.MYSQL, columnOne.getColumnType());
 			columnOne.setChartset(n[2] == null ? "" : n[2].toString());
 			columnOne.setNullable(n[3].toString().equalsIgnoreCase(CommonCode.YES) ? true : false);
 			columnOne.setCloumnKey(n[4].toString());
+			String idStategy = CommonUtils.getIdGenerateStrategy(DatabaseType.MYSQL, columnOne.getColumnType(), columnOne.getColunSize(), n[6].toString());
+			columnOne.setExtra(idStategy);
 			columnOne.setComment(n[8].toString());
 			return columnOne;
 		}).collect(Collectors.toList());

@@ -11,7 +11,7 @@ import com.gerry.pang.consts.DictCode.CommonCode;
 import com.gerry.pang.consts.DictCode.DatabaseDriverClass;
 import com.gerry.pang.consts.DictCode.DatabaseType;
 import com.gerry.pang.consts.DictCode.DatabaseURL;
-import com.gerry.pang.consts.DictCode.GeneralClassType;
+import com.gerry.pang.consts.MySQLDataTypeMapping;
 import com.gerry.pang.model.DataSourceModel;
 
 public class CommonUtils {
@@ -21,7 +21,7 @@ public class CommonUtils {
 	 * 
 	 * @param type
 	 * @return 
-	 * @author pangguowei
+	 * @author gerry_pang
 	 * @version 2018-06-01-1:57:44
 	 */
 	public static String getDBDriverClassByType(String type) {
@@ -42,7 +42,7 @@ public class CommonUtils {
 	 * 
 	 * @param type
 	 * @return 
-	 * @author pangguowei
+	 * @author gerry_pang
 	 * @version 2018-06-01-1:57:44
 	 */
 	public static String getDBUrlByType(DataSourceModel dataSource) {
@@ -66,8 +66,8 @@ public class CommonUtils {
 	 * 获取jar路径
 	 * 
 	 * @return 
-	 * @author pangguowei
-	 * @version 2018-06-01-1:57:44
+	 * @author gerry_pang
+	 * @version 2018-06-01 1:57:44
 	 */
 	public static String getJarFileUrl(){
 		String path = System.getProperty("java.class.path");
@@ -81,8 +81,8 @@ public class CommonUtils {
 	 * 获取当前工作路径
 	 * 
 	 * @return 
-	 * @author pangguowei
-	 * @version 2018-06-01-1:57:44
+	 * @author gerry_pang
+	 * @version 2018-06-01 1:57:44
 	 */
 	public static String getCruuentWorkUrl(){
 		String path = System.getProperty("user.dir");
@@ -99,8 +99,8 @@ public class CommonUtils {
 	 * 创建文件夹
 	 * 
 	 * @return 
-	 * @author pangguowei
-	 * @version 2018-06-01-1:57:44
+	 * @author gerry_pang
+	 * @version 2018-06-01 1:57:44
 	 */
 	public static boolean creatDirs(String aParentDir, String aSubDir) {
 		File aFile = new File(aParentDir);
@@ -120,25 +120,24 @@ public class CommonUtils {
 	 * 获取数据类型
 	 * 
 	 * @return 
-	 * @author pangguowei
-	 * @version 2018-06-01-1:57:44
+	 * @author gerry_pang
+	 * @version 2018-06-01 1:57:44
 	 */
 	public static String getDataType(String args) {
-		String temp = "";
 		if (StringUtils.isNotBlank(args)) {
 			if (StringUtils.contains(args, "(")) {
 				return StringUtils.substringBefore(args, "(");
 			}
 		}
-		return temp;
+		return args;
 	}
 
 	/**
 	 * 获取数据长度
 	 * 
 	 * @return 
-	 * @author pangguowei
-	 * @version 2018-06-01-1:57:44
+	 * @author gerry_pang
+	 * @version 2018-06-01 1:57:44
 	 */
 	public static List<String> getDataLength(String args) {
 		String temp = "";
@@ -155,6 +154,22 @@ public class CommonUtils {
 		}
 		return dataLength;
 	}
+	
+	public static String getIdGenerateStrategy(String databaseType, String colunmType, int colunmSize, String extra) {
+		String strategy = "";
+		if (DatabaseType.MYSQL.equalsIgnoreCase(databaseType)) {
+			if (StringUtils.isNotBlank(extra)) {
+				strategy = MySQLDataTypeMapping.generateKeyStategyMapping.get(extra);
+			} else {
+				strategy = MySQLDataTypeMapping.generateKeyStategyMapping.get(colunmType);
+				if (colunmType.equalsIgnoreCase("varchar") || colunmType.equalsIgnoreCase("char")) {
+					strategy = colunmSize >= 32 ? "uuid" : "assigned";
+				}
+			}
+		}
+		return strategy;
+	}
+	
 	
 	
 	public static void main(String[] args) {

@@ -25,10 +25,10 @@ public interface DictCode {
 		public static final String FORMATE_TIME = "HH:mm:ss";
 		
 		/** 默认数据库配置路径 */
-		public static final String CONFIG_PROPERTIES_PATH = "src/main/resources/props/autoCodeconfig.properties";
+		public static final String CONFIG_PROPERTIES_PATH = "src/main/resources/config.properties";
 		
 		/** 模板配置路径 */
-		public static final String TEMPLATE_PATH = "src/main/java/com/gerry/pang/template";
+		public static final String TEMPLATE_PATH = "/templates";
 		
 		/** 生成文件后缀名 */
 		public static final String SUFFIX = ".java";
@@ -67,7 +67,7 @@ public interface DictCode {
 		public static final String JDBC_DATABASE = "jdbc.database";
 		
 		/** 生成表名 */
-		public static final String GENERAL_TABLES = "general.tables";
+		public static final String JDBC_TABLES = "jdbc.tables";
 		
 		/** 生成类型 */
 		public static final String GENERAL_CLASS = "general.class";
