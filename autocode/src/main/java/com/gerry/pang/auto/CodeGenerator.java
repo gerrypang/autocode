@@ -38,10 +38,22 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 
+/**
+ * 代码生成类
+ * 
+ * @author gerry_pang
+ * @version v1.0.0 2018-06-11
+ */
 public class CodeGenerator {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CodeGenerator.class);
 	
+	/**
+	 * 根据数据库类型，生成handler类
+	 * 
+	 * @param datasource
+	 * @return
+	 */
 	private AutoCodeHandler getHandlerByDataBaseType(DataSourceModel datasource) {
 		AutoCodeHandler mysqlHandler = null;
 		if (datasource.getDataType().equalsIgnoreCase(DatabaseType.MYSQL)) {
@@ -50,16 +62,20 @@ public class CodeGenerator {
 		return mysqlHandler;
 	}
 	
+	/**
+	 * 生成Entity 实体类
+	 * 
+	 * @param datasource
+	 * @param config
+	 * @param commonData
+	 */
 	public void generateEntityClass(DataSourceModel datasource, Configuration config, CommonModel commonData) {
 		Map<String, Object> data = new HashMap<>();
 		AutoCodeHandler handler = getHandlerByDataBaseType(datasource);
 		List<TableModel> tableList = handler.getTableList(datasource);
 		for (TableModel tableOne : tableList) {
 			List<ColumnModel> cols = handler.getColumnOfTable(datasource, tableOne);
-			Set<String> importClass = cols.stream().filter(
-					n -> n != null && StringUtils.isNotBlank(n.getImportClass()) 
-					&& !StringUtils.contains(n.getImportClass(), "java.lang"))
-					.map(n -> n.getImportClass()).sorted().collect(Collectors.toSet());
+			Set<String> importClass = getImportClass(cols);
 			String extendClassName = commonData.getEntityExtendClass();
 			if (StringUtils.isNotBlank(extendClassName)) {
 				importClass.add(extendClassName);
@@ -90,16 +106,20 @@ public class CodeGenerator {
 		}
 	}
 	
+	/**
+	 * 生产DTO 类
+	 * 
+	 * @param datasource
+	 * @param config
+	 * @param commonData
+	 */
 	public void generateDtoClass(DataSourceModel datasource, Configuration config, CommonModel commonData){
 		Map<String, Object> data = new HashMap<>();
 		AutoCodeHandler handler = getHandlerByDataBaseType(datasource);
 		List<TableModel> tableList = handler.getTableList(datasource);
 		for (TableModel tableOne : tableList) {
 			List<ColumnModel> cols = handler.getColumnOfTable(datasource, tableOne);
-			Set<String> importClass = cols.stream().filter(
-					n -> n != null && StringUtils.isNotBlank(n.getImportClass()) 
-					&& !StringUtils.contains(n.getImportClass(), "java.lang"))
-					.map(n -> n.getImportClass()).sorted().collect(Collectors.toSet());
+			Set<String> importClass = getImportClass(cols);
 			importClass.add(commonData.getEntityExtendClass());
 			String extendClassName = commonData.getEntityExtendClass();
 			if (StringUtils.isNotBlank(extendClassName)) {
@@ -138,6 +158,13 @@ public class CodeGenerator {
 	
 	public void generateHbm(){}
 	
+	/**
+	 * 对于继承类，去除重复字段
+	 * 
+	 * @param originalColumns
+	 * @param extendClassName
+	 * @return
+	 */
 	private List<ColumnModel> excludeSameInExtendColumns(List<ColumnModel> originalColumns, String extendClassName){
 		List<ColumnModel> noRepeatColumns = new ArrayList<ColumnModel>();
 		List<ColumnModel> extendColumns = getExtendClassColunms(extendClassName);
@@ -151,6 +178,12 @@ public class CodeGenerator {
 		return noRepeatColumns;
 	}
 	
+	/**
+	 * 获取继承类的中的字段
+	 * 
+	 * @param extendClassName
+	 * @return
+	 */
 	private List<ColumnModel> getExtendClassColunms(String extendClassName) {
 		List<ColumnModel> extendsColumns = new ArrayList<ColumnModel>();
 		ColumnModel columnOne = null;
@@ -174,5 +207,21 @@ public class CodeGenerator {
 			logger.error(e.toString());
 		}
 		return extendsColumns;
+	}
+	
+	/**
+	 * 对引入类进行去重
+	 * 
+	 * @param cols
+	 * @return
+	 */
+	private Set<String> getImportClass(List<ColumnModel> cols){
+		Set<String> importClass = cols.stream().filter(
+				n -> n != null 
+				&& StringUtils.isNotBlank(n.getImportClass()) 
+				&& !StringUtils.contains(n.getImportClass(), "java.lang"))
+			.map(n -> n.getImportClass())
+			.sorted().collect(Collectors.toSet());		
+		return importClass;
 	}
 }

@@ -17,7 +17,7 @@ import freemarker.template.TemplateExceptionHandler;
  * freemarker生成配置
  * 
  * @author gerry_pang
- * @version 2018-06-05 1:51:20
+ * @version 2018-06-05
  */
 public class CommonFreemarkerUtils {
 	

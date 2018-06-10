@@ -4,6 +4,12 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * String操作工具类
+ * 
+ * @author gerry_pang
+ * @version v1.0.0 2018-06-01
+ */
 public class CommonStringUtils {
 	
 	/** 验证类/变量名 正则表达式 */

@@ -11,7 +11,12 @@ import java.util.Set;
 
 import com.gerry.pang.consts.DictCode.CommonCode;
 
-
+/**
+ * 参配文件工具类
+ * 
+ * @author gerry_pang
+ * @version v1.0.0 2018-06-01
+ */
 public class PropertiesUtils {
 
     /** 

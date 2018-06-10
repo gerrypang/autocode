@@ -2,9 +2,14 @@ package ${packageName}.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
-<#list table.importClass as x> 
+import org.hibernate.annotations.GenericGenerator;
+<#list table.importClass> 
+<#items as x>
 import ${x};
+</#items>
 </#list>
 
 /**
@@ -15,26 +20,29 @@ import ${x};
  */
 @Entity
 @Table(name = "${table.tableName}")
-public class ${table.javaName} {
+<#if extendClass?? >
+public class ${table.javaName} extends ${extendClass?keep_after_last(".")} {
+<#else>
+public class ${table.javaName} implements Serializable {
+</#if>
 
     private static final long serialVersionUID = -1L;
-    
-    <#list columnList as x>
+
+    <#list columnList as x> 
     <#if x.cloumnKey == "pri" || x.cloumnKey == "PRI" > 
     /** 主键 */
     @id
-    @GeneratedValue(generator = "${table.tableName}keyGen")
-    @GenericGenerator(name = "${table.tableName}keyGen", strategy = "${x.extra}")
+    @GeneratedValue(generator = "${table.javaName?uncap_first}KeyGenerate")
+    @GenericGenerator(name = "${table.javaName?uncap_first}KeyGenerate", strategy = "${x.extra}")
     @Column(name = "${x.columnName}", nullable = false, columnDefinition = "${x.columnTypeLength} comment '主键'")
     private ${x.javaType} ${x.javaName};
+    
     </#if> 
-    </#list>
-
-    <#list columnList as x> 
     <#if x.cloumnKey != "pri" || x.cloumnKey != "PRI" > 
     /** ${x.comment} */
     @Column(name = "${x.columnName}", nullable = ${x.nullable?string('true', 'false')}, columnDefinition = "${x.columnTypeLength} comment '${x.comment}'")
     private ${x.javaType} ${x.javaName};
+    
     </#if> 
     </#list>
 

@@ -14,6 +14,12 @@ import com.gerry.pang.consts.DictCode.DatabaseURL;
 import com.gerry.pang.consts.MySQLDataTypeMapping;
 import com.gerry.pang.model.DataSourceModel;
 
+/**
+ * 通用工具类
+ * 
+ * @author gerry_pang
+ * @version v1.0.0 2018-06-01
+ */
 public class CommonUtils {
 
 	/**
@@ -21,8 +27,6 @@ public class CommonUtils {
 	 * 
 	 * @param type
 	 * @return 
-	 * @author gerry_pang
-	 * @version 2018-06-01-1:57:44
 	 */
 	public static String getDBDriverClassByType(String type) {
 		if (type.equalsIgnoreCase(DatabaseType.MYSQL)) {
@@ -42,8 +46,7 @@ public class CommonUtils {
 	 * 
 	 * @param type
 	 * @return 
-	 * @author gerry_pang
-	 * @version 2018-06-01-1:57:44
+	 * @version 2018-06-01 
 	 */
 	public static String getDBUrlByType(DataSourceModel dataSource) {
 		String url = "";
@@ -66,8 +69,6 @@ public class CommonUtils {
 	 * 获取jar路径
 	 * 
 	 * @return 
-	 * @author gerry_pang
-	 * @version 2018-06-01 1:57:44
 	 */
 	public static String getJarFileUrl(){
 		String path = System.getProperty("java.class.path");
@@ -81,8 +82,6 @@ public class CommonUtils {
 	 * 获取当前工作路径
 	 * 
 	 * @return 
-	 * @author gerry_pang
-	 * @version 2018-06-01 1:57:44
 	 */
 	public static String getCruuentWorkUrl(){
 		String path = System.getProperty("user.dir");
@@ -99,8 +98,6 @@ public class CommonUtils {
 	 * 创建文件夹
 	 * 
 	 * @return 
-	 * @author gerry_pang
-	 * @version 2018-06-01 1:57:44
 	 */
 	public static boolean creatDirs(String aParentDir, String aSubDir) {
 		File aFile = new File(aParentDir);
@@ -120,8 +117,6 @@ public class CommonUtils {
 	 * 获取数据类型
 	 * 
 	 * @return 
-	 * @author gerry_pang
-	 * @version 2018-06-01 1:57:44
 	 */
 	public static String getDataType(String args) {
 		if (StringUtils.isNotBlank(args)) {
@@ -136,8 +131,6 @@ public class CommonUtils {
 	 * 获取数据长度
 	 * 
 	 * @return 
-	 * @author gerry_pang
-	 * @version 2018-06-01 1:57:44
 	 */
 	public static List<String> getDataLength(String args) {
 		String temp = "";

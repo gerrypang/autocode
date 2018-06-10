@@ -2,33 +2,40 @@ package ${packageName}.enum;
 
 import java.util.ArrayList;
 import java.util.List;
-${!importStr}
+<#list table.importClass> 
+<#items as x>
+import ${x};
+</#items>
+</#list>
 
-public class ${className}Enum {
+/**
+ * 描述：${table.comment} Enum类
+ * 
+ * @author ${author}
+ * ${generateDateTime}
+ */
+public class ${javaName}Enum {
 
+	<#list columnList as x> 
     /**
-     * 1001:全部通道广播消息
+     * ${x.codeValue}:${x.codeName}
      */
-    DATA_TARGET_TO_ALL("1001", "全部通道"),
-    
-    /**
-     * 1002:Alix直连消息
-     */
-    DATE_TARGET_TO_ALIX("1002", "ALix");
+    ${x.codeName}("${x.codeValue}", "${x.codeName}");
+	<#list columnList as x> 
 
 	private String value;
 
 	private String name;
 
-	private static List<${className}Enum> list;
+	private static List<${javaName}Enum> list;
 
-	${className}Enum(String value, String name) {
+	${javaName}Enum(String value, String name) {
 		this.value = value;
 		this.name = name;
 	}
 
 	public static String getDisplayNameByIndex(String value) {
-		for (${className}Enum enum : ${className}Enum.values()) {
+		for (${javaName}Enum enum : ${javaName}Enum.values()) {
 			if (value.equals(enum.getValue())) {
 				return enum.getName();
 			}

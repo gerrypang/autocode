@@ -20,34 +20,21 @@ import org.slf4j.LoggerFactory;
 import com.gerry.pang.consts.DictCode.DatabaseURL;
 import com.gerry.pang.model.DataSourceModel;
 
+/**
+ * 数据库操作工具类
+ * 
+ * @author gerry_pang
+ * @version v1.0.0 2018-06-01
+ */
 public class CommonDBUtils {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommonDBUtils.class);
-	
-//	/**
-//	 * 定义一个获取数据库连接的方法
-//	 * 
-//	 * @return 
-//	 * @author pangguowei
-//	 * @version v1.0.0  2018-06-01 3:52:59
-//	 */
-//	public static Connection getConnection() {
-//	    Connection conn = null;
-//	    try {
-//	    	url += DatabaseURL.MYSQL_URL;
-//	        conn = DriverManager.getConnection(url, username, password);
-//	    } catch (SQLException e) {
-//	        logger.error("获取连接失败 {}", e.getMessage());
-//	    }
-//	    return conn;
-//	}
 	
 	/**
 	 * 定义一个获取数据库连接的方法
 	 * 
 	 * @return 
-	 * @author pangguowei
-	 * @version v1.0.0  2018-06-01 3:52:59
+	 * @version v1.0.0  2018-06-01
 	 */
 	public static Connection getConnection(String url, String username, String password) {
 	    Connection conn = null;
@@ -66,8 +53,7 @@ public class CommonDBUtils {
 	 * @param rs
 	 * @param stat
 	 * @param conn 
-	 * @author pangguowei
-	 * @version v1.0.0 2018-06-01 3:52:59
+	 * @version v1.0.0 2018-06-01
 	 */
 	public static void close(ResultSet rs, Statement stat, Connection conn) {
 		try {

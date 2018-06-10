@@ -8,6 +8,9 @@ package com.gerry.pang.model;
  */
 public class EnumModel {
 	
+	/** 枚举名 */
+	private String javaName;
+
 	/** 枚举英文名 */
 	private String codeName;
 	
@@ -39,5 +42,13 @@ public class EnumModel {
 
 	public void setCodeComment(String codeComment) {
 		this.codeComment = codeComment;
+	}
+	
+	public String getJavaName() {
+		return javaName;
+	}
+
+	public void setJavaName(String javaName) {
+		this.javaName = javaName;
 	}
 }
