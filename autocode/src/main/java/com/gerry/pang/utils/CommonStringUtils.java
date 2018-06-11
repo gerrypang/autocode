@@ -63,6 +63,25 @@ public class CommonStringUtils {
 	}
 	
 	/**
+	 * 格式化变量名
+	 * @param variableName
+	 * @return
+	 * @throws Exception
+	 */
+	public  static String formatStaticVariableName(String variableName) throws Exception {
+		if (StringUtils.isBlank(variableName)) {
+			throw new Exception("常量名不能为空！");
+		}
+		if (!Pattern.matches(LEGAL_CV_NAME, variableName)) {
+			throw new Exception("常量名只能以字母开头，只能包含英文字母、数字、下划线！");
+		}
+		if (variableName.length() > 50) {
+			throw new Exception("常量名长度不能超过50个字符！");
+		}
+		return StringUtils.upperCase(variableName);
+	}
+	
+	/**
 	 * 格式化包名
 	 * @param className
 	 * @return

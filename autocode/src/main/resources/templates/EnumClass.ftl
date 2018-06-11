@@ -2,11 +2,6 @@ package ${packageName}.enum;
 
 import java.util.ArrayList;
 import java.util.List;
-<#list table.importClass> 
-<#items as x>
-import ${x};
-</#items>
-</#list>
 
 /**
  * 描述：${table.comment} Enum类
@@ -20,7 +15,7 @@ public class ${javaName}Enum {
     /**
      * ${x.codeValue}:${x.codeName}
      */
-    ${x.codeName}("${x.codeValue}", "${x.codeName}");
+    ${x.codeName}("${x.codeValue}", "${x.codeName}")<#if x?has_next>,<#else>;</#if>
 	<#list columnList as x> 
 
 	private String value;
@@ -44,9 +39,9 @@ public class ${javaName}Enum {
 	}
 
 	static {
-		list = new ArrayList<${className}Enum>();
-		${className}Enum[] enumValues = ${className}Enum.values();
-		for (${className}Enum enum : enumValues) {
+		list = new ArrayList<${javaName}Enum>();
+		${javaName}Enum[] enumValues = ${javaName}Enum.values();
+		for (${javaName}Enum enum : enumValues) {
 			list.add(enum);
 		}
 	}
@@ -67,7 +62,7 @@ public class ${javaName}Enum {
 		this.name = name;
 	}
 
-	public static List<${className}Enum> getDataList() {
+	public static List<${javaName}Enum> getDataList() {
 		return list;
 	}
 }

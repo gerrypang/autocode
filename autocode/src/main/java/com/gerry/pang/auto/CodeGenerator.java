@@ -120,7 +120,6 @@ public class CodeGenerator {
 		for (TableModel tableOne : tableList) {
 			List<ColumnModel> cols = handler.getColumnOfTable(datasource, tableOne);
 			Set<String> importClass = getImportClass(cols);
-			importClass.add(commonData.getEntityExtendClass());
 			String extendClassName = commonData.getEntityExtendClass();
 			if (StringUtils.isNotBlank(extendClassName)) {
 				importClass.add(extendClassName);
@@ -157,6 +156,29 @@ public class CodeGenerator {
 	public void generateAssemblerClass(){}
 	
 	public void generateHbm(){}
+	
+//	private void generateFileFromTemplate(){
+//		try {
+//			String dtoFileName = tableOne.getJavaName() + GeneralClassType.TYPE_DTO.toUpperCase();
+//			String fullPathName = CommonUtils.jointNewPath(commonData.getPath(), GeneralClassType.TYPE_DTO, dtoFileName);
+//			FileOutputStream fos = new FileOutputStream(new File(fullPathName));
+//			Writer out = new BufferedWriter(new OutputStreamWriter(fos, CommonCode.DEFAULT_CHARTSET), 10240);
+//			Template entityTemplate = config.getTemplate("DTOClass.ftl");
+//			entityTemplate.process(data, out);
+//			out.close();
+//		} catch (TemplateNotFoundException e) {
+//			logger.error(e.toString());
+//		} catch (MalformedTemplateNameException e) {
+//			logger.error(e.toString());
+//		} catch (ParseException e) {
+//			logger.error(e.toString());
+//		} catch (IOException e) {
+//			logger.error(e.toString());
+//		} catch (TemplateException e) {
+//			logger.error(e.toString());
+//		}
+//	}
+	
 	
 	/**
 	 * 对于继承类，去除重复字段
