@@ -28,6 +28,7 @@ import com.gerry.pang.handler.impl.MySQLAutoCodeHandlerImpl;
 import com.gerry.pang.model.ColumnModel;
 import com.gerry.pang.model.CommonModel;
 import com.gerry.pang.model.DataSourceModel;
+import com.gerry.pang.model.EnumModel;
 import com.gerry.pang.model.TableModel;
 import com.gerry.pang.utils.CommonUtils;
 
@@ -107,13 +108,13 @@ public class CodeGenerator {
 	}
 	
 	/**
-	 * 生产DTO 类
+	 * 生成DTO 类
 	 * 
 	 * @param datasource
 	 * @param config
 	 * @param commonData
 	 */
-	public void generateDtoClass(DataSourceModel datasource, Configuration config, CommonModel commonData){
+	public void generateDtoClass(DataSourceModel datasource, Configuration config, CommonModel commonData) {
 		Map<String, Object> data = new HashMap<>();
 		AutoCodeHandler handler = getHandlerByDataBaseType(datasource);
 		List<TableModel> tableList = handler.getTableList(datasource);
@@ -151,34 +152,84 @@ public class CodeGenerator {
 		}
 	}
 	
-	public void generateEnumClass(){}
+	/**
+	 * 生成bean转换类
+	 * 
+	 * @param config
+	 * @param commonData
+	 * @param enumList
+	 */
+	public void generateAssemblerClass(DataSourceModel datasource, Configuration config, CommonModel commonData) {
+		Map<String, Object> data = new HashMap<>();
+		AutoCodeHandler handler = getHandlerByDataBaseType(datasource);
+		List<TableModel> tableList = handler.getTableList(datasource);
+		for (TableModel tableOne : tableList) {
+			List<ColumnModel> cols = handler.getColumnOfTable(datasource, tableOne);
+			Set<String> importClass = getImportClass(cols);
+			String extendClassName = commonData.getEntityExtendClass();
+			if (StringUtils.isNotBlank(extendClassName)) {
+				importClass.add(extendClassName);
+				cols = excludeSameInExtendColumns(cols, extendClassName);
+			}
+			tableOne.setImportClass(importClass);
+			data.put("table", tableOne);
+			data.put("extendClass", extendClassName);
+			data.put("columnList", cols);
+			try {
+				String dtoFileName = tableOne.getJavaName() + StringUtils.capitalize(GeneralClassType.TYPE_ASSEMBLER);
+				String fullPathName = CommonUtils.jointNewPath(commonData.getPath(), GeneralClassType.TYPE_ASSEMBLER, dtoFileName);
+				FileOutputStream fos = new FileOutputStream(new File(fullPathName));
+				Writer out = new BufferedWriter(new OutputStreamWriter(fos, CommonCode.DEFAULT_CHARTSET), 10240);
+				Template entityTemplate = config.getTemplate("AssemblerClass.ftl");
+				entityTemplate.process(data, out);
+				out.close();
+			} catch (TemplateNotFoundException e) {
+				logger.error(e.toString());
+			} catch (MalformedTemplateNameException e) {
+				logger.error(e.toString());
+			} catch (ParseException e) {
+				logger.error(e.toString());
+			} catch (IOException e) {
+				logger.error(e.toString());
+			} catch (TemplateException e) {
+				logger.error(e.toString());
+			}
+		}
+	}	
 	
-	public void generateAssemblerClass(){}
-	
-	public void generateHbm(){}
-	
-//	private void generateFileFromTemplate(){
-//		try {
-//			String dtoFileName = tableOne.getJavaName() + GeneralClassType.TYPE_DTO.toUpperCase();
-//			String fullPathName = CommonUtils.jointNewPath(commonData.getPath(), GeneralClassType.TYPE_DTO, dtoFileName);
-//			FileOutputStream fos = new FileOutputStream(new File(fullPathName));
-//			Writer out = new BufferedWriter(new OutputStreamWriter(fos, CommonCode.DEFAULT_CHARTSET), 10240);
-//			Template entityTemplate = config.getTemplate("DTOClass.ftl");
-//			entityTemplate.process(data, out);
-//			out.close();
-//		} catch (TemplateNotFoundException e) {
-//			logger.error(e.toString());
-//		} catch (MalformedTemplateNameException e) {
-//			logger.error(e.toString());
-//		} catch (ParseException e) {
-//			logger.error(e.toString());
-//		} catch (IOException e) {
-//			logger.error(e.toString());
-//		} catch (TemplateException e) {
-//			logger.error(e.toString());
-//		}
-//	}
-	
+	/**
+	 * 生成枚举 类
+	 * 
+	 * @param config
+	 * @param commonData
+	 * @param enumList
+	 */
+	public void generateEnumClass(Configuration config, CommonModel commonData, List<EnumModel> enumList) {
+		Map<String, Object> data = new HashMap<>();
+		for (EnumModel enumOne : enumList) {
+			data.put("enum", enumOne);
+			try {
+				String dtoFileName = StringUtils.containsIgnoreCase(enumOne.getJavaName(), GeneralClassType.TYPE_ENUM) ? 
+						enumOne.getJavaName(): enumOne.getJavaName() + StringUtils.capitalize(GeneralClassType.TYPE_ENUM);
+				String fullPathName = CommonUtils.jointNewPath(commonData.getPath(), GeneralClassType.TYPE_ENUM + "s", dtoFileName);
+				FileOutputStream fos = new FileOutputStream(new File(fullPathName));
+				Writer out = new BufferedWriter(new OutputStreamWriter(fos, CommonCode.DEFAULT_CHARTSET), 10240);
+				Template entityTemplate = config.getTemplate("EnumClass.ftl");
+				entityTemplate.process(data, out);
+				out.close();
+			} catch (TemplateNotFoundException e) {
+				logger.error(e.toString());
+			} catch (MalformedTemplateNameException e) {
+				logger.error(e.toString());
+			} catch (ParseException e) {
+				logger.error(e.toString());
+			} catch (IOException e) {
+				logger.error(e.toString());
+			} catch (TemplateException e) {
+				logger.error(e.toString());
+			}
+		}
+	}
 	
 	/**
 	 * 对于继承类，去除重复字段
@@ -187,7 +238,7 @@ public class CodeGenerator {
 	 * @param extendClassName
 	 * @return
 	 */
-	private List<ColumnModel> excludeSameInExtendColumns(List<ColumnModel> originalColumns, String extendClassName){
+	private List<ColumnModel> excludeSameInExtendColumns(List<ColumnModel> originalColumns, String extendClassName) {
 		List<ColumnModel> noRepeatColumns = new ArrayList<ColumnModel>();
 		List<ColumnModel> extendColumns = getExtendClassColunms(extendClassName);
 		originalColumns.stream().filter(item -> {
@@ -237,7 +288,7 @@ public class CodeGenerator {
 	 * @param cols
 	 * @return
 	 */
-	private Set<String> getImportClass(List<ColumnModel> cols){
+	private Set<String> getImportClass(List<ColumnModel> cols) {
 		Set<String> importClass = cols.stream().filter(
 				n -> n != null 
 				&& StringUtils.isNotBlank(n.getImportClass()) 

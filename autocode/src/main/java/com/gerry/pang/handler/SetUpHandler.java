@@ -11,11 +11,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
 import com.gerry.pang.consts.DictCode.AutoCodeProperties;
 import com.gerry.pang.consts.DictCode.CommonCode;
 import com.gerry.pang.consts.DictCode.GeneralClassType;
 import com.gerry.pang.model.CommonModel;
 import com.gerry.pang.model.DataSourceModel;
+import com.gerry.pang.model.EnumModel;
 import com.gerry.pang.model.TableModel;
 import com.gerry.pang.utils.AutoCodeClassLoader;
 import com.gerry.pang.utils.CommonFreemarkerUtils;
@@ -137,29 +139,38 @@ public class SetUpHandler {
 			common.setEnumExtendClass(genMap.get(GeneralClassType.TYPE_ENUM));
 			common.setEnum(true);
 			if (createSuccess) {
-				result = CommonUtils.creatDirs(parentDir, GeneralClassType.TYPE_ENUM);
+				result = CommonUtils.creatDirs(parentDir, GeneralClassType.TYPE_ENUM + "s");
 				logger.info("{} crate directory {}", GeneralClassType.TYPE_ENUM, result);
 			}
 		}
-		if (genMap.get(GeneralClassType.TYPE_Assembler) != null) {
-			common.setAssemblerExtendClass(genMap.get(GeneralClassType.TYPE_Assembler));
+		if (genMap.get(GeneralClassType.TYPE_ASSEMBLER) != null) {
+			common.setAssemblerExtendClass(genMap.get(GeneralClassType.TYPE_ASSEMBLER));
 			common.setAssembler(true);
 			if (createSuccess) {
-				result = CommonUtils.creatDirs(parentDir, GeneralClassType.TYPE_Assembler);
-				logger.info("{} crate directory {}", GeneralClassType.TYPE_Assembler, result);
+				result = CommonUtils.creatDirs(parentDir, GeneralClassType.TYPE_ASSEMBLER);
+				logger.info("{} crate directory {}", GeneralClassType.TYPE_ASSEMBLER, result);
 			}
 		}
 		logger.info(">>>>> 完成加载通用配置 ");
 		return common;
 	}
 	
+	public List<EnumModel> loadEnumConfig() {
+		propertyMap = this.getProperties();
+		String enumJson = propertyMap.get(AutoCodeProperties.PERFIX_ENUM);
+		List<EnumModel> enumList = new ArrayList<EnumModel>();
+		if (StringUtils.isNotBlank(enumJson)) {
+			enumList = JSON.parseArray(enumJson, EnumModel.class);
+		}
+		return enumList;
+	}
+	
+	
 	/**
 	 * 获取freemarker模板config对象
 	 * 
 	 * @param common
 	 * @return 
-	 * @author  pangguowei
-	 * @version 2018-06-05 2:03:11
 	 */
 	public Configuration setUpFreemarkerTemplateConfig(CommonModel common) {
 		Configuration config = CommonFreemarkerUtils.getFreeMarkerCfg(this.getClass() ,CommonCode.TEMPLATE_PATH);

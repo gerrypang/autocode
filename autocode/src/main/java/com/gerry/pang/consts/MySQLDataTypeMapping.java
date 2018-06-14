@@ -13,6 +13,7 @@ public class MySQLDataTypeMapping {
 		typeMapping.put("char", "java.lang.String");
 		typeMapping.put("blob", "java.lang.byte");
 		typeMapping.put("text", "java.lang.String");
+		typeMapping.put("mediumtext", "java.lang.String");
 		
 		typeMapping.put("int", "java.lang.Integer");
 		typeMapping.put("integer", "java.lang.Long");
@@ -32,7 +33,6 @@ public class MySQLDataTypeMapping {
 		typeMapping.put("datetime", "java.util.Date");
 		typeMapping.put("timestamp", "java.util.Date");
 		typeMapping.put("year", "java.util.Date");
-		
 		
 		generateKeyStategyMapping.put("auto_increment", "identity");
 		generateKeyStategyMapping.put("char", "assigned");

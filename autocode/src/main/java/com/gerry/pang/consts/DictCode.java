@@ -45,6 +45,9 @@ public interface DictCode {
 		/** 生成配置前缀 */
 		public static final String PERFIX_GENERAL = "general.";
 		
+		/** 枚举配置前缀 */
+		public static final String PERFIX_ENUM = "enum";
+		
 		/** 数据库类型 */
 		public static final String JDBC_TYPE = "jdbc.type";
 		
@@ -92,7 +95,7 @@ public interface DictCode {
 		
 		public static final String TYPE_ENUM = "enum";
 		
-		public static final String TYPE_Assembler = "assembler";
+		public static final String TYPE_ASSEMBLER = "assembler";
 	}
 	
 	
