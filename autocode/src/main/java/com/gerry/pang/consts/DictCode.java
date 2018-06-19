@@ -39,14 +39,34 @@ public interface DictCode {
 	 */
 	interface AutoCodeProperties {
 		
+		/** 生成类型 */
+		public static final String GENERAL_CLASS = "general.class";
+
+		/** 生成类型 */
+		public static final String GENERAL_AUTHOR = "general.author";
+		
+		/** 生成基础包路径 */
+		public static final String GENERAL_PACKAGE = "general.package";
+		
+		/** 生成路径 */
+		public static final String GENERAL_PATH = "general.path";
+		
+		/** 从那种方式生成 */
+		public static final String GENERAL_FROM = "general.from";
+		
+		
 		/** 数据库配置前缀 */
-		public static final String PERFIX_JDBC = "jdbc.";
+		public static final String PERFIX_JDBC = "jdbc";
 		
 		/** 生成配置前缀 */
-		public static final String PERFIX_GENERAL = "general.";
+		public static final String PERFIX_GENERAL = "general";
 		
 		/** 枚举配置前缀 */
 		public static final String PERFIX_ENUM = "enum";
+		
+		/** excel配置前缀 */
+		public static final String PERFIX_EXCEL = "excel";
+		
 		
 		/** 数据库类型 */
 		public static final String JDBC_TYPE = "jdbc.type";
@@ -69,21 +89,32 @@ public interface DictCode {
 		/** 数据库名 */
 		public static final String JDBC_DATABASE = "jdbc.database";
 		
-		/** 生成表名 */
+		/** jdbc生成表名 */
 		public static final String JDBC_TABLES = "jdbc.tables";
 		
-		/** 生成类型 */
-		public static final String GENERAL_CLASS = "general.class";
-
-		/** 生成类型 */
-		public static final String GENERAL_AUTHOR = "general.author";
 		
-		/** 生成基础包路径 */
-		public static final String GENERAL_PACKAGE = "general.package";
+		/** excel url */
+		public static final String EXCEL_URL = "excel.url";
 		
-		/** 生成路径 */
-		public static final String GENERAL_PATH = "general.path";
+		/** excel生成表名 */
+		public static final String EXCEL_TABLES = "excel.tables";
+		
+		/** excel生成sqlType */
+		public static final String EXCEL_SQLTYPE = "excel.sqlType";
 	}
+	
+	
+	/**
+	 * 从那种生成类型
+	 */
+	interface GeneralFrom {
+		/** 从数据库 */
+		public static final String FROM_JDBC = "jdbc";
+		
+		/** 从excel */
+		public static final String FROM_EXCEL = "excel";
+	}
+	
 	
 	/** 
 	 * 生成类型 
@@ -113,6 +144,7 @@ public interface DictCode {
 		public static final String DB2 = "db2";
 	}
 	
+	
 	/**
 	 * 数据库驱动类
 	 */
@@ -141,6 +173,7 @@ public interface DictCode {
 		/** DB2 url */
 		public static final String DB2_URL = "jdbc:db2://ip:port/dbname";
 	}
+	
 	
 	interface MySQLKeyGeneralStrategy {
 		public static final String AUTO = "auto_increment";

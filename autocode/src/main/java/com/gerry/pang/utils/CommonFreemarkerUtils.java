@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gerry.pang.consts.DictCode.CommonCode;
-import com.gerry.pang.handler.SetUpHandler;
+import com.gerry.pang.handler.DataBaseSetUpHandler;
 
 import freemarker.cache.NullCacheStorage;
 import freemarker.template.Configuration;
@@ -21,7 +21,7 @@ import freemarker.template.TemplateExceptionHandler;
  */
 public class CommonFreemarkerUtils {
 	
-	private static final Logger logger = LoggerFactory.getLogger(SetUpHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(DataBaseSetUpHandler.class);
 	
 	private CommonFreemarkerUtils() {
 		
