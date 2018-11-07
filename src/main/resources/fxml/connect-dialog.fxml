@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<BorderPane prefHeight="341.9998779296875" prefWidth="500.9998779296875" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <right>
+    <GridPane prefHeight="342.0" prefWidth="500.999755859375">
+      <children>
+        <TextField prefWidth="318.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Label text="链接名称：" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label text="主机：" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Label text="数据库类型：" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label text="密码：" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+        <Label text="用户名：" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <TextField prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+        <Label text="端口：" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <Label text="库名：" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+        <TextField prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+        <TextField prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+        <Label text="编码：" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <TextField prefWidth="318.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+        <PasswordField prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+        <SplitMenuButton contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" prefWidth="318.0" text="请选择数据库类型" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.rowIndex="3">
+          <items>
+            <MenuItem mnemonicParsing="false" text="操作 1" />
+            <MenuItem mnemonicParsing="false" text="操作 2" />
+          </items>
+        </SplitMenuButton>
+        <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Separator prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <SplitMenuButton ellipsisString="" mnemonicParsing="false" prefWidth="318.0" text="请选择链接编码" textAlignment="CENTER" textOverrun="CLIP" underline="false" GridPane.columnIndex="2" GridPane.rowIndex="6">
+          <items>
+            <MenuItem mnemonicParsing="false" text="操作 1" />
+            <MenuItem mnemonicParsing="false" text="操作 2" />
+          </items>
+        </SplitMenuButton>
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="40.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="89.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="10.0" prefWidth="332.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="40.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+  </right>
+</BorderPane>
